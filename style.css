@@ -1,0 +1,255 @@
+/* ==========================================================================
+   1. Base Reset & Structure Styling
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #0A0B0E; /* Dark cyber off-black background */
+    color: #FFFFFF;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. Sticky Navigation Bar
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #11141B;
+    padding: 15px 6%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #006600; /* Subtle Green Border Accent */
+}
+
+.nav-logo {
+    color: #006600;
+    font-weight: bold;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 25px;
+}
+
+.nav-links a {
+    color: #A0AEC0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #006600;
+}
+
+/* ==========================================================================
+   3. Hero Identity Branding
+   ========================================================================== */
+.hero-section {
+    text-align: center;
+    padding: 70px 20px 40px 20px;
+    background: linear-gradient(to bottom, #11141B, #0A0B0E);
+}
+
+.profile-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 4px solid #006600;
+    object-fit: cover;
+    margin-bottom: 15px;
+    background-color: #141822;
+}
+
+.hero-section h1 {
+    font-size: 2.8rem;
+    color: #006600;
+    letter-spacing: 1.5px;
+}
+
+.brand-subtext {
+    color: #EE3540; /* Accent Crimson Red */
+    font-weight: 700;
+    letter-spacing: 4px;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+/* ==========================================================================
+   4. Marketplace Product Grid
+   ========================================================================== */
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.store-section {
+    padding: 30px 0;
+}
+
+.store-section h2 {
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 2.1rem;
+    margin-bottom: 5px;
+}
+
+.section-desc {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 35px;
+    font-size: 1rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Base Product Card */
+.product-card {
+    background-color: #141822; /* Slate card interface background */
+    border: 1px solid #232D3F;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Target Section Border Lighting Colors on Hover */
+.product-card.bot-card:hover { border-color: #00B4D8; }    /* Cyan for Bots */
+.product-card.panel-card:hover { border-color: #A0AEC0; }  /* Silver-Gray for Panels */
+.product-card.server-card:hover { border-color: #006600; } /* Corporate Green for Servers */
+
+/* Featured Boundary Frames */
+.bot-focus { border-color: #00B4D8; }
+.panel-focus { border-color: #A0AEC0; }
+.server-focus { border-color: #006600; }
+
+/* Dynamic Card Badges */
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: #2D3748;
+}
+.card-badge.high-tier { background-color: #00B4D8; color: #0A0B0E; }
+.card-badge.popular { background-color: #FFFFFF; color: #0A0B0E; }
+.card-badge.power { background-color: #006600; color: #FFF; }
+
+.product-card h3 {
+    font-size: 1.5rem;
+    margin: 15px 0 10px 0;
+    color: #FFFFFF;
+}
+
+/* Feature Checklist Blocks */
+.product-specs {
+    list-style: none;
+    text-align: left;
+    margin: 10px 0 25px 0;
+    color: #CBD5E0;
+    font-size: 0.95rem;
+}
+
+.product-specs li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 22px;
+}
+
+.product-specs li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Checklist Color Mapping */
+.bot-card .product-specs li::before { color: #00B4D8; }
+.panel-card .product-specs li::before { color: #A0AEC0; }
+.server-card .product-specs li::before { color: #006600; }
+
+.price-tag {
+    font-size: 2.3rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+.price-tag span { font-size: 1rem; color: #718096; }
+
+/* Multi-Color Layout Action Buttons */
+.action-btn {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.action-btn:active { transform: scale(0.97); }
+
+.bot-btn { background-color: #00B4D8; color: #0A0B0E; }
+.bot-btn:hover { background-color: #0092B0; }
+
+.panel-btn { background-color: #2D3748; color: #FFFFFF; border: 1px solid #4A5568; }
+.panel-btn:hover { background-color: #4A5568; }
+.panel-focus .panel-btn { background-color: #FFFFFF; color: #0A0B0E; border: none; }
+.panel-focus .panel-btn:hover { background-color: #E2E8F0; }
+
+.server-btn { background-color: #006600; }
+.server-btn:hover { background-color: #004D00; }
+
+/* Section Dividers */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #232D3F, transparent);
+    margin: 45px 0;
+}
+
+/* Footer Section */
+.site-footer {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #11141B;
+    border-top: 1px solid #1A222F;
+    color: #4A5568;
+    font-size: 0.9rem;
+    margin-top: 40px;
+}
