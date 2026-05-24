@@ -196,49 +196,88 @@
         <p>&copy; 2026 Olala Net Tech. All Rights Reserved. Development & Digital Hosting Infrastructure.</p>
     </footer>
 
-    <script>
+<script>
 function checkAccessKey() {
-    // Get what the user typed in the input box
+    // 1. Clean the input (make it all uppercase and remove extra spaces)
     const userInput = document.getElementById("accessKeyInput").value.trim().toUpperCase();
     const downloadArea = document.getElementById("secureDownloadArea");
     const outputGrid = document.getElementById("productOutputGrid");
     
-    // Clear out old data from the display grid
+    // 2. Clear out whatever was showing before so files don't mix up
     outputGrid.innerHTML = "";
 
     // ==========================================================================
-    // DATA VAULT: Define your custom keys and their corresponding product codes here
+    // SECURE DYNAMIC DISPATCH ROUTER
     // ==========================================================================
-    if (userInput === "OLALA-BOT-789") {
-        // Show the secure hidden block
+    
+    // PRODUCT GROUP 1: WHATSAPP GROUP BOTS ONLY
+    if (userInput === "OLALA-WAG-512" || userInput === "OLALA-WAG-904") {
         downloadArea.style.display = "block";
         
-        // Inject the WhatsApp Store Bot code delivery
+        // This injects ONLY the Group Bot. The user cannot see panels or servers.
         outputGrid.innerHTML = `
-            <div class="product-card secure-card">
-                <span class="card-badge high-tier">Source Code</span>
-                <h3>WhatsApp Store Bot files</h3>
-                <p class="features">Thank you for your purchase from Olala Net Tech!</p>
-                <a href="https://yourfilehosting.com/download/bot-files.zip" class="action-btn bot-btn">Download .ZIP File</a>
+            <div class="product-card secure-card" style="border-color: #00B4D8; max-width: 420px; margin: 0 auto;">
+                <span class="card-badge high-tier" style="background-color: #00B4D8; color: #0A0B0E;">Bot Activated</span>
+                <h3>WhatsApp Group Manager Bot</h3>
+                <p class="features" style="margin: 15px 0 20px 0; color: #A0AEC0;">
+                    Your core script bundle and deployment documentation are compiled below.
+                </p>
+                <a href="pkg_wag_v1_secure.zip" download class="action-btn bot-btn">📥 Download Bot Scripts (.ZIP)</a>
             </div>
         `;
     } 
-    else if (userInput === "OLALA-PANEL-123") {
+    
+    // PRODUCT GROUP 2: WHATSAPP STORE BOTS ONLY
+    else if (userInput === "OLALA-WAS-781" || userInput === "OLALA-WAS-304") {
         downloadArea.style.display = "block";
         
-        // Inject the Control Panel deployment guide or link
         outputGrid.innerHTML = `
-            <div class="product-card secure-card">
-                <span class="card-badge popular">Access Link</span>
-                <h3>Reseller Panel Dashboard</h3>
-                <p class="features">Your custom server installation dashboard portal link:</p>
-                <a href="https://yourpanelipaddress.com:8080" class="action-btn panel-btn" target="_blank">Access Panel Interface</a>
+            <div class="product-card secure-card" style="border-color: #00B4D8; max-width: 420px; margin: 0 auto;">
+                <span class="card-badge high-tier" style="background-color: #00B4D8; color: #0A0B0E;">Store Activated</span>
+                <h3>WhatsApp Automated Store Bot</h3>
+                <p class="features" style="margin: 15px 0 20px 0; color: #A0AEC0;">
+                    Includes full M-Pesa automated integration assets and database modules.
+                </p>
+                <a href="pkg_was_premium_locked.zip" download class="action-btn bot-btn">📥 Download Premium Bot (.ZIP)</a>
             </div>
         `;
-    } 
+    }
+
+    // PRODUCT GROUP 3: RESELLER PANELS ONLY
+    else if (userInput === "OLALA-PNL-650" || userInput === "OLALA-PNL-112") {
+        downloadArea.style.display = "block";
+        
+        outputGrid.innerHTML = `
+            <div class="product-card secure-card" style="border-color: #A0AEC0; max-width: 420px; margin: 0 auto;">
+                <span class="card-badge popular" style="background-color: #FFFFFF; color: #0A0B0E;">Panel Portal</span>
+                <h3>White-Label Reseller Panel</h3>
+                <p class="features" style="margin: 15px 0 20px 0; color: #A0AEC0;">
+                    Your dedicated structural installation gateway address has been initialized.
+                </p>
+                <a href="https://your-panel-link-here.com/login" target="_blank" class="action-btn panel-btn" style="background-color:#FFF; color:#0A0B0E;">🌐 Access Admin Panel Dashboard</a>
+            </div>
+        `;
+    }
+
+    // PRODUCT GROUP 4: VPS CLOUD SERVERS ONLY
+    else if (userInput === "OLALA-SRV-317" || userInput === "OLALA-SRV-884") {
+        downloadArea.style.display = "block";
+        
+        outputGrid.innerHTML = `
+            <div class="product-card secure-card" style="border-color: #006600; max-width: 420px; margin: 0 auto;">
+                <span class="card-badge power" style="background-color: #006600; color: #FFF;">VPS Active</span>
+                <h3>Linux VPS Mainframe Terminal</h3>
+                <p class="features" style="margin: 15px 0 20px 0; color: #A0AEC0;">
+                    Download your dedicated server root keys, SSH ports, and access credentials below.
+                </p>
+                <a href="srv_root_access_317.txt" download class="action-btn server-btn">📥 Download Access Credentials</a>
+            </div>
+        `;
+    }
+    
+    // ERROR TRAP
     else {
-        // If the key doesn't match anything, sound the alert
-        alert("❌ Invalid or expired Access Key. Please contact Olala Net Tech support if this is an error.");
+        alert("❌ Invalid Access Key. If you have already paid, please send your transaction message to Olala Net Tech support.");
         downloadArea.style.display = "none";
     }
 }
