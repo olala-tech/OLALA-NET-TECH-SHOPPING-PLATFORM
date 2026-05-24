@@ -49,6 +49,22 @@
 </p>
 
 ---
+
+        <section id="retrieval" class="store-section retrieval-section">
+    <h2>🔑 Access Your Purchased Products</h2>
+    <p class="section-desc">Enter the secure Access Key provided to you upon payment validation</p>
+    
+    <div class="retrieval-box">
+        <input type="text" id="accessKeyInput" placeholder="Enter your Access Key (e.g., OLALA-XXXX)" autocomplete="off">
+        <button onclick="checkAccessKey()" class="action-btn verify-btn">Unlock Product</button>
+    </div>
+
+    <div id="secureDownloadArea" class="secure-download-area" style="display: none;">
+        <h3>✓ Access Granted! Your Digital Assets are Ready</h3>
+        <div id="productOutputGrid" class="grid-container">
+            </div>
+    </div>
+</section>
         <section class="payment-guide-container">
     <div class="guide-card">
         <h3>⚡ How to Order & Pay</h3>
@@ -180,5 +196,52 @@
         <p>&copy; 2026 Olala Net Tech. All Rights Reserved. Development & Digital Hosting Infrastructure.</p>
     </footer>
 
+    <script>
+function checkAccessKey() {
+    // Get what the user typed in the input box
+    const userInput = document.getElementById("accessKeyInput").value.trim().toUpperCase();
+    const downloadArea = document.getElementById("secureDownloadArea");
+    const outputGrid = document.getElementById("productOutputGrid");
+    
+    // Clear out old data from the display grid
+    outputGrid.innerHTML = "";
+
+    // ==========================================================================
+    // DATA VAULT: Define your custom keys and their corresponding product codes here
+    // ==========================================================================
+    if (userInput === "OLALA-BOT-789") {
+        // Show the secure hidden block
+        downloadArea.style.display = "block";
+        
+        // Inject the WhatsApp Store Bot code delivery
+        outputGrid.innerHTML = `
+            <div class="product-card secure-card">
+                <span class="card-badge high-tier">Source Code</span>
+                <h3>WhatsApp Store Bot files</h3>
+                <p class="features">Thank you for your purchase from Olala Net Tech!</p>
+                <a href="https://yourfilehosting.com/download/bot-files.zip" class="action-btn bot-btn">Download .ZIP File</a>
+            </div>
+        `;
+    } 
+    else if (userInput === "OLALA-PANEL-123") {
+        downloadArea.style.display = "block";
+        
+        // Inject the Control Panel deployment guide or link
+        outputGrid.innerHTML = `
+            <div class="product-card secure-card">
+                <span class="card-badge popular">Access Link</span>
+                <h3>Reseller Panel Dashboard</h3>
+                <p class="features">Your custom server installation dashboard portal link:</p>
+                <a href="https://yourpanelipaddress.com:8080" class="action-btn panel-btn" target="_blank">Access Panel Interface</a>
+            </div>
+        `;
+    } 
+    else {
+        // If the key doesn't match anything, sound the alert
+        alert("❌ Invalid or expired Access Key. Please contact Olala Net Tech support if this is an error.");
+        downloadArea.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
