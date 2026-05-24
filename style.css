@@ -313,3 +313,56 @@ body {
 .step-item strong {
     color: #FFFFFF;
 }
+/* ==========================================================================
+   Secure Retrieval Vault Styles
+   ========================================================================== */
+.retrieval-box {
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    display: flex;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+#accessKeyInput {
+    flex: 1;
+    background-color: #11141B;
+    border: 1px solid #232D3F;
+    border-radius: 30px;
+    padding: 12px 20px;
+    color: #FFFFFF;
+    font-size: 1rem;
+    outline: none;
+    text-align: center;
+}
+
+#accessKeyInput:focus {
+    border-color: #00B4D8; /* Shines Cyan when clicked */
+}
+
+.verify-btn {
+    background-color: #00B4D8;
+    color: #0A0B0E;
+    border: none;
+    cursor: pointer;
+}
+
+.secure-download-area {
+    background-color: #0E1A1F;
+    border: 2px solid #00B4D8; /* Framed in glowing cyan */
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 20px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.secure-download-area h3 {
+    color: #00B4D8;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
