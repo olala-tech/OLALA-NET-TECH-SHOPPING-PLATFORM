@@ -4,7 +4,12 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Prevents padding from adding extra width */
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Hard-locks the horizontal screen so it cannot scroll right */
 }
 
 html {
@@ -370,16 +375,17 @@ body {
    Large Mpesa Processing Textarea Field Styling
    ========================================================================== */
 .retrieval-box-large {
-    max-width: 650px;
+    width: 100%;
+    max-width: 650px; /* Looks clean on laptop */
     margin: 0 auto 30px auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding: 0 15px;
+    padding: 0 15px; /* Adds a safe breathing gap on phones */
 }
 
 #mpesaInput {
-    width: 100%;
+    width: 100%; /* Stretches to fit the container perfectly without breaking out */
     background-color: #11141B;
     border: 1px solid #232D3F;
     border-radius: 12px;
@@ -390,7 +396,6 @@ body {
     resize: none;
     font-family: monospace;
 }
-
 #mpesaInput:focus {
     border-color: #00B4D8;
     box-shadow: 0 0 8px rgba(0, 180, 216, 0.2);
@@ -405,4 +410,40 @@ body {
     border: none;
     cursor: pointer;
     font-weight: bold;
+}
+/* ==========================================================================
+   5. Mobile Responsiveness Optimization (Screens smaller than 768px)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    /* Stack navigation items cleanly */
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .nav-links {
+        padding: 0;
+    }
+
+    .nav-links li {
+        margin: 0 10px;
+    }
+
+    /* Shrink giant hero headers so typography fits text boundaries */
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    /* Ensure product layout elements collapse into single column tracks */
+    .grid-container {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    /* Prevent the payment steps from leaking right */
+    .steps-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
