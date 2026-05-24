@@ -50,40 +50,187 @@
 
 ---
 
-        <section id="retrieval" class="store-section retrieval-section">
+       <section id="retrieval" class="store-section retrieval-section">
     <h2>🔑 Access Your Purchased Products</h2>
-    <p class="section-desc">Enter the secure Access Key provided to you upon payment validation</p>
+    <p class="section-desc">Paste your complete M-Pesa confirmation text message below to unlock your digital assets instantly.</p>
     
-    <div class="retrieval-box">
-        <input type="text" id="accessKeyInput" placeholder="Enter your Access Key (e.g., OLALA-XXXX)" autocomplete="off">
-        <button onclick="checkAccessKey()" class="action-btn verify-btn">Unlock Product</button>
+    <div class="retrieval-box-large">
+        <textarea id="mpesaInput" placeholder="Paste your full M-Pesa text message here... (e.g., UK45XYZ789 Confirmed. Ksh2,000.00 paid to OLALA NET TECH...)" rows="4"></textarea>
+        <button onclick="verifyMpesaPayment()" class="action-btn verify-btn">Verify Transaction & Unlock</button>
     </div>
 
     <div id="secureDownloadArea" class="secure-download-area" style="display: none;">
-        <h3>✓ Access Granted! Your Digital Assets are Ready</h3>
+        <h3 id="vaultStatusHeader">✓ Access Granted! Your Purchased Assets are Ready</h3>
         <div id="productOutputGrid" class="grid-container">
             </div>
     </div>
 </section>
-        <section class="payment-guide-container">
-    <div class="guide-card">
-        <h3>⚡ How to Order & Pay</h3>
-        <div class="steps-grid">
-            <div class="step-item">
-                <span class="step-number">1</span>
-                <p>Click the <strong>Buy / Deploy</strong> button on any product below to initiate your secure order directly via our WhatsApp desk.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-number">2</span>
-                <p>Receive your official invoice and send your payment securely via <strong>SEND MONEY (Mpesa Number: +254717785886)</strong>.</p>
-            </div>
-            <div class="step-item">
-                <span class="step-number">3</span>
-                <p>Once payment is automatically verified, your customized Bot, Panel, or Server credentials will be deployed instantly!</p>
-            </div>
-        </div>
-    </div>
-</section>
+
+<script>
+// ==========================================================================
+// OLALA NET TECH - M-PESA SECURITY VAULT (DATABASE LOG)
+// ==========================================================================
+// This tracks how many times a code has been used during this browser session.
+// Note: Since this is frontend code, to permanently prevent reuse across different users, 
+// you remove/comment out used codes from the masterUsedCodes registry below once processed!
+const masterUsedCodes = {
+    "TKB123XYZ": 0, // Code name : number of times used
+    "UK45ABC789": 1,
+};
+
+function verifyMpesaPayment() {
+    const rawMessage = document.getElementById("mpesaInput").value.trim();
+    const downloadArea = document.getElementById("secureDownloadArea");
+    const outputGrid = document.getElementById("productOutputGrid");
+    const statusHeader = document.getElementById("vaultStatusHeader");
+    
+    outputGrid.innerHTML = ""; // Clear old render frames
+
+    if (!rawMessage) {
+        alert("❌ Please paste your M-Pesa text message first.");
+        return;
+    }
+
+    // 1. Extract M-Pesa Transaction Code (Looks for 10 alphanumeric characters starting with K, L, M, N, P, Q, R, S, T, U, V, W, X, Y)
+    const codeRegex = /\b[K-Z][A-Z0-9]{9}\b/;
+    const codeMatch = rawMessage.match(codeRegex);
+
+    if (!codeMatch) {
+        alert("❌ Invalid M-Pesa confirmation format. Could not locate a valid 10-character transaction reference code.");
+        return;
+    }
+    const transactionCode = codeMatch[0];
+
+    // 2. Extract Amount (Looks for 'Ksh' or 'Ksh ' followed by numbers/commas)
+    const amountRegex = /(?:Ksh|Ksh\s?)([\d,]+(?:\.\d{2})?)/i;
+    const amountMatch = rawMessage.match(amountRegex);
+
+    if (!amountMatch) {
+        alert("❌ Invalid M-Pesa confirmation format. Could not safely extract the transaction payment amount.");
+        return;
+    }
+    // Convert extracted text amount (e.g., "4,500.00") into a standard numbers integer (4500)
+    const amountPaid = parseFloat(amountMatch[1].replace(/,/g, ''));
+
+    // 3. Security Check: Strict Anti-Replay System (Cannot use a code more than twice)
+    if (masterUsedCodes[transactionCode] === undefined) {
+        // Initialize tracking for brand new code found
+        masterUsedCodes[transactionCode] = 0;
+    }
+
+    if (masterUsedCodes[transactionCode] >= 2) {
+        alert(`❌ Access Denied! Code [${transactionCode}] has already been used twice to claim items. Contact support if you need a refresh.`);
+        downloadArea.style.display = "none";
+        return;
+    }
+
+    // Increment usage counter for this transaction code
+    masterUsedCodes[transactionCode]++;
+
+    // ==========================================================================
+    // AUTOMATED PRICING MATRIX ROUTER
+    // ==========================================================================
+    let allowedProducts = [];
+
+    // SINGLE PRODUCT CHECKS
+    if (amountPaid === 1000) {
+        allowedProducts = ["STARTER_VPS"];
+    } else if (amountPaid === 1800) {
+        allowedProducts = ["PRO_VPS"];
+    } else if (amountPaid === 2000) {
+        allowedProducts = ["GROUP_BOT"];
+    } else if (amountPaid === 3500) {
+        allowedProducts = ["STANDARD_PANEL"];
+    } else if (amountPaid === 4500) {
+        allowedProducts = ["STORE_BOT"];
+    } else if (amountPaid === 6000) {
+        allowedProducts = ["RESELLER_PANEL"];
+    }
+    
+    // MULTI-PRODUCT COMBINATIONS (Amount corresponds perfectly)
+    else if (amountPaid === 3800) { // Group Bot (2000) + Pro VPS (1800)
+        allowedProducts = ["GROUP_BOT", "PRO_VPS"];
+    } else if (amountPaid === 6300) { // Store Bot (4500) + Pro VPS (1800)
+        allowedProducts = ["STORE_BOT", "PRO_VPS"];
+    } else if (amountPaid === 12300) { // Ultimate Bundle: Store Bot (4500) + Reseller Panel (6000) + Pro VPS (1800)
+        allowedProducts = ["STORE_BOT", "RESELLER_PANEL", "PRO_VPS"];
+    }
+
+    // ==========================================================================
+    // DYNAMIC LAYOUT INJECTION ENGINE
+    // ==========================================================================
+    if (allowedProducts.length > 0) {
+        downloadArea.style.display = "block";
+        statusHeader.innerHTML = `✓ Code [${transactionCode}] Verified! Unlocked ${allowedProducts.length} Product(s) (Used ${masterUsedCodes[transactionCode]}/2 Times)`;
+
+        allowedProducts.forEach(product => {
+            if (product === "GROUP_BOT") {
+                outputGrid.innerHTML += `
+                    <div class="product-card secure-card" style="border-color: #00B4D8;">
+                        <span class="card-badge" style="background-color: #00B4D8; color: #0A0B0E;">Active Bot</span>
+                        <h3>WhatsApp Group Bot</h3>
+                        <p class="features" style="margin: 10px 0 20px 0; color: #A0AEC0;">Your group automation manager package file download.</p>
+                        <a href="pkg_wag_v1_secure.zip" download class="action-btn bot-btn" style="background-color: #00B4D8; color: #0A0B0E;">📥 Download Bot Script</a>
+                    </div>
+                `;
+            }
+            if (product === "STORE_BOT") {
+                outputGrid.innerHTML += `
+                    <div class="product-card secure-card" style="border-color: #00B4D8;">
+                        <span class="card-badge" style="background-color: #00B4D8; color: #0A0B0E;">Active Premium</span>
+                        <h3>WhatsApp Store Bot</h3>
+                        <p class="features" style="margin: 10px 0 20px 0; color: #A0AEC0;">Includes automated M-Pesa push API configuration assets.</p>
+                        <a href="pkg_was_premium_locked.zip" download class="action-btn bot-btn" style="background-color: #00B4D8; color: #0A0B0E;">📥 Download Store Files</a>
+                    </div>
+                `;
+            }
+            if (product === "STANDARD_PANEL") {
+                outputGrid.innerHTML += `
+                    <div class="product-card secure-card" style="border-color: #A0AEC0;">
+                        <span class="card-badge" style="background-color: #A0AEC0; color: #0A0B0E;">Active Panel</span>
+                        <h3>Standard Admin Panel</h3>
+                        <p class="features" style="margin: 10px 0 20px 0; color: #A0AEC0;">Standard client management installation architecture parameters guide.</p>
+                        <a href="panel_standard_guide.txt" download class="action-btn panel-btn" style="background-color: #A0AEC0; color: #0A0B0E;">📥 Download Setup Manual</a>
+                    </div>
+                `;
+            }
+            if (product === "RESELLER_PANEL") {
+                outputGrid.innerHTML += `
+                    <div class="product-card secure-card" style="border-color: #A0AEC0;">
+                        <span class="card-badge" style="background-color: #FFFFFF; color: #0A0B0E;">Active Reseller</span>
+                        <h3>White-Label Reseller Panel</h3>
+                        <p class="features" style="margin: 10px 0 20px 0; color: #A0AEC0;">Click below to access your unique white-label infrastructure dashboard interface.</p>
+                        <a href="https://your-panel-link-here.com/login" target="_blank" class="action-btn panel-btn" style="background-color: #FFFFFF; color: #0A0B0E; display:block; text-decoration:none; padding:12px; border-radius:30px; font-weight:bold;">🌐 Open Panel Portal</a>
+                    </div>
+                `;
+            }
+            if (product === "STARTER_VPS") {
+                outputGrid.innerHTML += `
+                    <div class="product-card secure-card" style="border-color: #006600;">
+                        <span class="card-badge" style="background-color: #006600; color: #FFF;">Active Cloud</span>
+                        <h3>Linux VPS - Tier 1 Starter</h3>
+                        <p class="features" style="margin: 10px 0 20px 0; color: #A0AEC0;">Root initialization keys and login terminals setup text file data.</p>
+                        <a href="srv_tier1_setup.txt" download class="action-btn server-btn" style="background-color: #006600; color: #FFF; display:block; text-decoration:none; padding:12px; border-radius:30px; font-weight:bold;">📥 Download VPS Keys</a>
+                    </div>
+                `;
+            }
+            if (product === "PRO_VPS") {
+                outputGrid.innerHTML += `
+                    <div class="product-card secure-card" style="border-color: #006600;">
+                        <span class="card-badge" style="background-color: #006600; color: #FFF;">Active High-Power</span>
+                        <h3>Linux VPS - Tier 2 Pro</h3>
+                        <p class="features" style="margin: 10px 0 20px 0; color: #A0AEC0;">High capacity configurations data details deployment credentials asset file.</p>
+                        <a href="srv_root_access_317.txt" download class="action-btn server-btn" style="background-color: #006600; color: #FFF; display:block; text-decoration:none; padding:12px; border-radius:30px; font-weight:bold;">📥 Download VPS Keys</a>
+                    </div>
+                `;
+            }
+        });
+    } else {
+        alert(`❌ Amount found (Ksh ${amountPaid}) does not precisely match any individual product price or multi-product bundle combination on Olala Net Tech.`);
+        downloadArea.style.display = "none";
+    }
+}
+</script>
 
         
         <p class="brand-subtext">AUTOMATION | PANELS | INFRASTRUCTURE</p>
